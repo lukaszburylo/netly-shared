@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="netly_shared",           # nazwa paczki, taka jak w pip install
-    version="0.0.1",                 # wersja paczki
+    version="0.0.2",                 # wersja paczki
     packages=find_packages(),        # automatyczne znalezienie folderów z __init__.py
     install_requires=[               # opcjonalne zależności
         # "requests>=2.28.0",
