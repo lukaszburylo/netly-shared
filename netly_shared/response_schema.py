@@ -23,15 +23,13 @@ class ClientFeedback(BaseModel):
     host_id: str
     api_key: str
     execution_id: str
-    timestamp: datetime
+    timestamp: str
     overall_status: str
     total_services: int
     successful_services: int
     failed_services: int
     results: List[ServiceResult]
 
-    class Config:
-        json_encoders = {datetime: lambda v: v.isoformat()}
 
 
 example_data = {
