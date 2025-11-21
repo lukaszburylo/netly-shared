@@ -5,7 +5,7 @@ setup(
     version="0.0.2",                 # wersja paczki
     packages=find_packages(),        # automatyczne znalezienie folderów z __init__.py
     install_requires=[               # opcjonalne zależności
-        # "requests>=2.28.0",
+        "pydantic",
     ],
     python_requires='>=3.10',         # wersja Pythona
 )
