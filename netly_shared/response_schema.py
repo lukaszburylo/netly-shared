@@ -1,12 +1,17 @@
+from enum import Enum
+
 from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 from datetime import datetime
 
+class Status(str, Enum):
+    SUCCESS = "Success"
+    FAILED = "Failed"
 
 # Each service result
 class ServiceResult(BaseModel):
     service_name: str
-    status: str
+    status: Status
     parameters_used: Optional[Dict[str, Any]]
     output: Optional[str]
     execution_time_ns: Optional[int]
