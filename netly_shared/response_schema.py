@@ -9,7 +9,7 @@ class ServiceResult(BaseModel):
     status: str
     parameters_used: Optional[Dict[str, Any]]
     output: Optional[str]
-    execution_time_ms: Optional[int]
+    execution_time_ns: Optional[int]
     metadata: Optional[Dict[str, Any]]
 
 
@@ -41,7 +41,7 @@ example_data = {
             "status": "success",
             "parameters_used": {"container_name": "my_container"},
             "output": "Container started successfully",
-            "execution_time_ms": 2500,
+            "execution_time_ns": 2500,
             "metadata": {
                 "container_name": "my_container",
                 "container_image": "my_container_image:latest",
