@@ -15,7 +15,7 @@ class Service(BaseModel):
         return v
 
 
-class Request(BaseModel):
+class ServerRequest(BaseModel):
     API_KEY: str
     HOST_ID: str
     request_id: str

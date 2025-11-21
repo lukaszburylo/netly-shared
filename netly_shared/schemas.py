@@ -1,12 +1,14 @@
-from enum import Enum
+import datetime
 
-from pydantic import BaseModel
+from enum import Enum
+from pydantic import BaseModel, field_validator
 from typing import List, Optional, Dict, Any
-from datetime import datetime
+
 
 class Status(str, Enum):
     SUCCESS = "Success"
     FAILED = "Failed"
+
 
 # Each service result
 class ServiceResult(BaseModel):
@@ -16,6 +18,35 @@ class ServiceResult(BaseModel):
     output: Optional[str]
     execution_time_ns: Optional[int]
     metadata: Optional[Dict[str, Any]]
+
+
+class Service(BaseModel):
+    service_name: str
+    parameters: Optional[Dict[str, Any]] = None
+
+    @field_validator("service_name")
+    @classmethod
+    def no_spaces(cls, v: str) -> str:
+        if " " in v:
+            raise ValueError("service_name cannot contain spaces")
+        return v
+
+
+class ServerRequest(BaseModel):
+    API_KEY: str
+    HOST_ID: str
+    request_id: str
+    timestamp: str
+    services: List[Service]
+
+    @field_validator("timestamp")
+    @classmethod
+    def check_timestamp(cls, v: str) -> str:
+        try:
+            datetime.datetime.fromisoformat(v)
+        except ValueError as e:
+            raise
+        return v
 
 
 # Top-level feedback model
@@ -30,6 +61,14 @@ class ClientFeedback(BaseModel):
     failed_services: int
     results: List[ServiceResult]
 
+    @field_validator("timestamp")
+    @classmethod
+    def check_timestamp(cls, v: str) -> str:
+        try:
+            datetime.datetime.fromisoformat(v)
+        except ValueError as e:
+            raise
+        return v
 
 
 example_data = {
