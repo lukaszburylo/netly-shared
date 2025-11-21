@@ -30,6 +30,9 @@ class ClientFeedback(BaseModel):
     failed_services: int
     results: List[ServiceResult]
 
+    class Config:
+        json_encoders = {datetime: lambda v: v.isoformat()}
+
 
 example_data = {
     "host_id": "foo",
