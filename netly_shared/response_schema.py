@@ -2,11 +2,6 @@ from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 from datetime import datetime
 
-# Metadata for each service result
-class ServiceMetadata(BaseModel):
-    container_name: Optional[str]
-    container_image: Optional[str]
-    exposed_ports: Optional[int]
 
 # Each service result
 class ServiceResult(BaseModel):
@@ -15,7 +10,8 @@ class ServiceResult(BaseModel):
     parameters_used: Optional[Dict[str, Any]]
     output: Optional[str]
     execution_time_ms: Optional[int]
-    metadata: Optional[ServiceMetadata]
+    metadata: Optional[Dict[str, Any]]
+
 
 # Top-level feedback model
 class ClientFeedback(BaseModel):
@@ -46,14 +42,13 @@ example_data = {
             "parameters_used": {"container_name": "my_container"},
             "output": "Container started successfully",
             "execution_time_ms": 2500,
-            "metadata":
-                {
-                    "container_name": "my_container",
-                    "container_image": "my_container_image:latest",
-                    "exposed_ports": 5051
-                }
+            "metadata": {
+                "container_name": "my_container",
+                "container_image": "my_container_image:latest",
+                "exposed_ports": 5051,
+            },
         }
-    ]
+    ],
 }
 
-_mydata = ClientFeedback(**example_data)
+# _mydata = ClientFeedback(**example_data)

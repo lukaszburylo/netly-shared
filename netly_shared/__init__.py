@@ -1,4 +1,4 @@
 from .ResponseTemplate import ResponseTemplate
-from .response_schema import ServiceResult, ServiceMetadata
+from .response_schema import ServiceResult, ClientFeedback
 
-__all__ = ["ResponseTemplate", "ServiceResult", "ServiceMetadata"]
+__all__ = ["ResponseTemplate", "ServiceResult", "ClientFeedback"]
