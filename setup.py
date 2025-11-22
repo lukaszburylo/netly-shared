@@ -1,3 +1,4 @@
+"""Setup script for packaging and distributing the project."""
 from setuptools import setup, find_packages
 
 setup(

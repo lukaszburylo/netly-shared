@@ -1,17 +1,23 @@
+"""Netly schemas"""
+
 import datetime
 
 from enum import Enum
-from pydantic import BaseModel, field_validator
 from typing import List, Optional, Dict, Any
+from pydantic import BaseModel, field_validator
 
 
 class Status(str, Enum):
+    """Service result status"""
+
     SUCCESS = "Success"
     FAILED = "Failed"
 
 
 # Each service result
 class ServiceResult(BaseModel):
+    """Service Result Model"""
+
     service_name: str
     status: Status
     parameters_used: Optional[Dict[str, Any]]
@@ -21,18 +27,23 @@ class ServiceResult(BaseModel):
 
 
 class Service(BaseModel):
+    """Service Model"""
+
     service_name: str
     parameters: Optional[Dict[str, Any]] = None
 
     @field_validator("service_name")
     @classmethod
     def no_spaces(cls, v: str) -> str:
+        """Check for spaces in service_name"""
         if " " in v:
             raise ValueError("service_name cannot contain spaces")
         return v
 
 
 class ServerRequest(BaseModel):
+    """Service Request Model"""
+
     API_KEY: str
     HOST_ID: str
     request_id: str
@@ -42,15 +53,18 @@ class ServerRequest(BaseModel):
     @field_validator("timestamp")
     @classmethod
     def check_timestamp(cls, v: str) -> str:
+        """Check if timestamp is valid"""
         try:
             datetime.datetime.fromisoformat(v)
         except ValueError as e:
-            raise
+            raise ValueError(f"Invalid ISO datetime value: {v}") from e
         return v
 
 
 # Top-level feedback model
 class ClientFeedback(BaseModel):
+    """Client Feedback Model"""
+
     host_id: str
     api_key: str
     execution_id: str
@@ -64,10 +78,11 @@ class ClientFeedback(BaseModel):
     @field_validator("timestamp")
     @classmethod
     def check_timestamp(cls, v: str) -> str:
+        """Check if timestamp is valid"""
         try:
             datetime.datetime.fromisoformat(v)
         except ValueError as e:
-            raise
+            raise ValueError(f"Invalid ISO datetime value: {v}") from e
         return v
 
 
